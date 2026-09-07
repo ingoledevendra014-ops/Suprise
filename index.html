@@ -1,1 +1,544 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Naktuu ❤️</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif, system-ui;
+    }
+    body {
+      background: #11050a;
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Background Hearts Animation */
+    .bg-hearts {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .heart {
+      position: absolute;
+      color: #ff4b72;
+      opacity: 0.3;
+      font-size: 20px;
+      animation: floatUp 6s infinite linear;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) scale(0.8); opacity: 0; }
+      50% { opacity: 0.6; }
+      100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 420px;
+      min-height: 100vh;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .screen {
+      display: none;
+      width: 100%;
+      animation: fadeIn 0.5s ease-in-out forwards;
+    }
+    .screen.active {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    h1, h2 {
+      color: #ff7597;
+      margin-bottom: 10px;
+    }
+    p {
+      color: #e0d0d8;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+    .btn {
+      background: linear-gradient(135deg, #ff4b72, #ff7597);
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(255, 75, 114, 0.4);
+      transition: transform 0.2s;
+      margin-top: 15px;
+    }
+    .btn:active {
+      transform: scale(0.96);
+    }
+
+    /* Chest Box */
+    .chest-box {
+      font-size: 80px;
+      cursor: pointer;
+      margin: 30px 0;
+      transition: transform 0.3s ease;
+    }
+    .chest-box:hover {
+      transform: scale(1.1);
+    }
+
+    /* PIN Lock */
+    .pin-display {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 25px;
+    }
+    .dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 2px solid #ff4b72;
+    }
+    .dot.filled {
+      background: #ff4b72;
+    }
+    .keypad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      width: 100%;
+      max-width: 260px;
+    }
+    .key {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      width: 65px;
+      height: 65px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 22px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Counter */
+    .counter-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    .counter-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 75, 114, 0.3);
+      padding: 12px;
+      border-radius: 12px;
+    }
+    .counter-card span {
+      display: block;
+      font-size: 20px;
+      font-weight: bold;
+      color: #ff7597;
+    }
+    .counter-card label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #aaa;
+    }
+    .cake {
+      font-size: 70px;
+      margin: 15px 0;
+      cursor: pointer;
+    }
+
+    /* Polaroid Photo Frame */
+    .polaroid {
+      background: white;
+      padding: 15px 15px 25px 15px;
+      border-radius: 8px;
+      color: #333;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      width: 85%;
+      margin: 15px 0;
+    }
+    .polaroid img {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+    .polaroid p {
+      color: #444;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      margin-top: 12px;
+      margin-bottom: 0;
+      font-weight: bold;
+    }
+
+    /* Balloons */
+    .balloon-container {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin: 25px 0;
+    }
+    .balloon {
+      font-size: 45px;
+      cursor: pointer;
+    }
+    .wish-box {
+      background: rgba(255, 75, 114, 0.2);
+      border: 1px solid #ff4b72;
+      padding: 12px;
+      border-radius: 10px;
+      margin-top: 10px;
+      min-height: 50px;
+      width: 100%;
+    }
+
+    /* Scratch Card */
+    .scratch-container {
+      position: relative;
+      width: 280px;
+      height: 180px;
+      margin: 20px 0;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .scratch-content {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #2b081a, #521035);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-radius: 12px;
+      padding: 10px;
+    }
+    canvas#scratchCanvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+
+    /* Letter Envelope */
+    .envelope {
+      background: #250a18;
+      border: 2px solid #ff4b72;
+      border-radius: 12px;
+      padding: 20px;
+      width: 100%;
+      text-align: left;
+      line-height: 1.7;
+      font-size: 14px;
+      max-height: 380px;
+      overflow-y: auto;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Audio player pointing to song.mp3 -->
+  <audio id="bgMusic" loop>
+    <source src="song.mp3" type="audio/mp3">
+  </audio>
+
+  <div class="bg-hearts" id="heartsBg"></div>
+
+  <div class="app-container">
+
+    <!-- Screen 1: Surprise Box -->
+    <div class="screen active" id="screen1">
+      <h1>A surprise awaits you... ✨</h1>
+      <p>✨ Something special, just for Naktuu ✨</p>
+      <div class="chest-box" onclick="startSurprise()">🎁</div>
+      <p>Tap the gift box to open & play music 🎵</p>
+    </div>
+
+    <!-- Screen 2: PIN Lock -->
+    <div class="screen" id="screen2">
+      <h2>Birthday Surprise 💖</h2>
+      <p>Enter secret code 🗝️ (Code: 1701)</p>
+      <div class="pin-display">
+        <div class="dot" id="dot1"></div>
+        <div class="dot" id="dot2"></div>
+        <div class="dot" id="dot3"></div>
+        <div class="dot" id="dot4"></div>
+      </div>
+      <div class="keypad">
+        <div class="key" onclick="pressKey('1')">1</div>
+        <div class="key" onclick="pressKey('2')">2</div>
+        <div class="key" onclick="pressKey('3')">3</div>
+        <div class="key" onclick="pressKey('4')">4</div>
+        <div class="key" onclick="pressKey('5')">5</div>
+        <div class="key" onclick="pressKey('6')">6</div>
+        <div class="key" onclick="pressKey('7')">7</div>
+        <div class="key" onclick="pressKey('8')">8</div>
+        <div class="key" onclick="pressKey('9')">9</div>
+        <div class="key" onclick="clearKey()">C</div>
+        <div class="key" onclick="pressKey('0')">0</div>
+        <div class="key" onclick="deleteKey()">⌫</div>
+      </div>
+    </div>
+
+    <!-- Screen 3: Cake & Counter -->
+    <div class="screen" id="screen3">
+      <h2>Happy Birthday Naktuu 🎂</h2>
+      <p>The World Has Been Better Since ❤️</p>
+      
+      <div class="counter-grid">
+        <div class="counter-card"><span>18</span><label>Years</label></div>
+        <div class="counter-card"><span>6,573</span><label>Days</label></div>
+        <div class="counter-card"><span>1,57,770</span><label>Hours</label></div>
+        <div class="counter-card"><span>94,66,230</span><label>Minutes</label></div>
+      </div>
+
+      <div class="cake" id="cake" onclick="toggleCandle()">🎂</div>
+      <p id="cakeStatus">Tap the cake to blow out candles 🕯️</p>
+
+      <button class="btn" onclick="goToScreen(4)">See Our Memories 🌸</button>
+    </div>
+
+    <!-- Screen 4: Real Photo Gallery -->
+    <div class="screen" id="screen4">
+      <h2>Our Memories 💖</h2>
+      
+      <div class="polaroid">
+        <img id="memoryImg" src="photo1.jpg" alt="Memory Photo">
+        <p id="memoryCaption">Special Bond ❤️</p>
+      </div>
+
+      <button class="btn" onclick="nextMemory()">Next Photo 📸</button>
+      <button class="btn" style="background:#444;" onclick="goToScreen(5)">Next Surprise 🎁</button>
+    </div>
+
+    <!-- Screen 5: Pop Balloons -->
+    <div class="screen" id="screen5">
+      <h2>Pop the Wishes 🎈</h2>
+      <p>Tap each balloon to reveal a wish</p>
+      
+      <div class="balloon-container">
+        <span class="balloon" onclick="popBalloon(this, 'You make my whole world brighter ✨')">🎈</span>
+        <span class="balloon" onclick="popBalloon(this, 'Thank you for every single smile 😊')">🎈</span>
+        <span class="balloon" onclick="popBalloon(this, 'You are my favourite person, always 💕')">🎈</span>
+        <span class="balloon" onclick="popBalloon(this, 'I am so lucky to have you 🌟')">🎈</span>
+      </div>
+
+      <div class="wish-box" id="wishBox">Tap a balloon above!</div>
+      
+      <button class="btn" onclick="goToScreen(6)">Continue 💫</button>
+    </div>
+
+    <!-- Screen 6: Scratch Card -->
+    <div class="screen" id="screen6">
+      <h2>One Last Surprise ✨</h2>
+      <p>Scratch the golden card to reveal 🪙</p>
+
+      <div class="scratch-container">
+        <div class="scratch-content">
+          <h3>🎉 Happy Birthday Naktuu! 🎉</h3>
+          <p>You mean everything ❤️</p>
+        </div>
+        <canvas id="scratchCanvas"></canvas>
+      </div>
+
+      <button class="btn" onclick="goToScreen(7)">Read My Letter ✉️</button>
+    </div>
+
+    <!-- Screen 7: Exact Letter Text -->
+    <div class="screen" id="screen7">
+      <h2>A Special Letter ✉️</h2>
+      
+      <div class="envelope">
+        <p><strong>Naktuu,</strong></p><br>
+        <p>tula bolav tevdh kami first tr me tula thank you mnto ha ha tu mnar deva thank you kshala are tu maza life mdhe ali ani mazi sgli life change keli tya mul he sgl tr tula adhi sangun zaly but part akda sangto .</p><br>
+        <p>Tula wishes kay dyavav naktuu tu maza sathi ak wish ahes ji me n maghta mla devani dili ahe aj maza sathi gharchyna sathi khup special day ahe ha naktuu khup special day ahe ani specially aj apn purn 1 year zal aplya bonding la adhi hi bond hota but yevdha nvta magchya birthday pasun apn jast close alo so tula adhi tr happy Birthday life mdhe khup successful ho Happy rha ani kush rha tuza deva tuza SOBT again happy Birthday naktuu latter sampl nahi pudhch latter tula tula sadhya text madhe bhetl....🫀💝</p>
+      </div>
+
+      <button class="btn" onclick="goToScreen(1)">Watch Again 🔄</button>
+    </div>
+
+  </div>
+
+  <script>
+    function playMusic() {
+      const music = document.getElementById('bgMusic');
+      music.play().catch(e => console.log("Music play issue: ", e));
+    }
+
+    function startSurprise() {
+      playMusic();
+      goToScreen(2);
+    }
+
+    function goToScreen(screenNum) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById('screen' + screenNum).classList.add('active');
+      if(screenNum === 6) initScratchCard();
+    }
+
+    // Keypad PIN
+    let currentPin = "";
+    const correctPin = "1701";
+
+    function pressKey(num) {
+      if (currentPin.length < 4) {
+        currentPin += num;
+        updateDots();
+        if (currentPin.length === 4) {
+          setTimeout(() => {
+            if (currentPin === correctPin) {
+              currentPin = "";
+              updateDots();
+              goToScreen(3);
+            } else {
+              alert("Wrong Passcode! Code is 1701");
+              currentPin = "";
+              updateDots();
+            }
+          }, 200);
+        }
+      }
+    }
+
+    function deleteKey() {
+      currentPin = currentPin.slice(0, -1);
+      updateDots();
+    }
+
+    function clearKey() {
+      currentPin = "";
+      updateDots();
+    }
+
+    function updateDots() {
+      for (let i = 1; i <= 4; i++) {
+        const dot = document.getElementById('dot' + i);
+        if (i <= currentPin.length) dot.classList.add('filled');
+        else dot.classList.remove('filled');
+      }
+    }
+
+    // Cake Candle Toggle
+    let candleBlown = false;
+    function toggleCandle() {
+      const cake = document.getElementById('cake');
+      const status = document.getElementById('cakeStatus');
+      if (!candleBlown) {
+        cake.innerText = "🍰";
+        status.innerText = "Candles blown out! Make a wish! 🎉✨";
+        candleBlown = true;
+      } else {
+        cake.innerText = "🎂";
+        status.innerText = "Tap the cake to blow out candles 🕯️";
+        candleBlown = false;
+      }
+    }
+
+    // Photos Array (photo1.jpg, photo2.jpg, photo3.jpg, photo4.jpg)
+    const memories = [
+      { img: "photo1.jpg", caption: "Special Bond ❤️" },
+      { img: "photo2.jpg", caption: "EVERYTHING - my day 💖" },
+      { img: "photo3.jpg", caption: "Together & Happy 🌺" },
+      { img: "photo4.jpg", caption: "Sweetest Moments 💫" }
+    ];
+    let currentMemIndex = 0;
+
+    function nextMemory() {
+      currentMemIndex = (currentMemIndex + 1) % memories.length;
+      document.getElementById('memoryImg').src = memories[currentMemIndex].img;
+      document.getElementById('memoryCaption').innerText = memories[currentMemIndex].caption;
+    }
+
+    function popBalloon(element, message) {
+      element.style.visibility = 'hidden';
+      document.getElementById('wishBox').innerText = message;
+    }
+
+    function initScratchCard() {
+      const canvas = document.getElementById('scratchCanvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+
+      ctx.fillStyle = '#d4af37';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.font = 'bold 16px Poppins';
+      ctx.fillStyle = '#fff';
+      ctx.textAlign = 'center';
+      ctx.fillText('Scratch Here 🪙', canvas.width / 2, canvas.height / 2);
+
+      let isDrawing = false;
+
+      function scratch(e) {
+        if (!isDrawing) return;
+        const rect = canvas.getBoundingClientRect();
+        const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+        const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+        const x = clientX - rect.left;
+        const y = clientY - rect.top;
+
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.beginPath();
+        ctx.arc(x, y, 20, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      canvas.addEventListener('mousedown', () => isDrawing = true);
+      canvas.addEventListener('mouseup', () => isDrawing = false);
+      canvas.addEventListener('mousemove', scratch);
+
+      canvas.addEventListener('touchstart', () => isDrawing = true);
+      canvas.addEventListener('touchend', () => isDrawing = false);
+      canvas.addEventListener('touchmove', scratch);
+    }
+
+    function initHearts() {
+      const bg = document.getElementById('heartsBg');
+      for (let i = 0; i < 25; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.innerHTML = '❤️';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+        heart.style.animationDelay = (Math.random() * 5) + 's';
+        bg.appendChild(heart);
+      }
+    }
+
+    initHearts();
+  </script>
+</body>
+</html>
 
